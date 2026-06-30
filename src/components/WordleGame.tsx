@@ -117,38 +117,53 @@ export default function WordleGame() {
         )}
       </AnimatePresence>
 
-      {/* Grid Header (Desktop only) */}
-      {guesses.length > 0 && (
-        <div className="hidden md:grid grid-cols-6 gap-3 text-center text-xs font-black text-slate-400 uppercase tracking-widest px-2">
-          <div>Jogador</div>
-          <div>Nac.</div>
-          <div>Liga</div>
-          <div>Time</div>
-          <div>Pos.</div>
-          <div>Idade</div>
-        </div>
-      )}
+      {/* Grid Header */}
+      <div className="hidden md:grid grid-cols-6 gap-3 text-center text-xs font-black text-slate-400 uppercase tracking-widest px-2 mt-4">
+        <div>Jogador</div>
+        <div>Nac.</div>
+        <div>Liga</div>
+        <div>Time</div>
+        <div>Pos.</div>
+        <div>Idade</div>
+      </div>
 
-      {/* Guesses List */}
+      {/* Guesses List & Empty Slots */}
       <div className="flex flex-col gap-4 relative z-0">
-        {guesses.map((guess, i) => (
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 24 }}
-            key={i} 
-            className="grid grid-cols-2 md:grid-cols-6 gap-3 bg-white p-3 rounded-2xl shadow-sm border-2 border-slate-100"
-          >
-            <div className="col-span-2 md:col-span-1 bg-slate-50 rounded-xl p-3 flex items-center justify-center text-center border-2 border-slate-100">
-              <span className="font-black text-slate-700 text-sm md:text-base leading-tight">{guess.player.name}</span>
-            </div>
-            <StatusBox status={guess.nationality} value={guess.player.nationality} label="Nac." />
-            <StatusBox status={guess.league} value={guess.player.league} label="Liga" />
-            <StatusBox status={guess.team} value={guess.player.team} label="Time" />
-            <StatusBox status={guess.position} value={guess.player.position} label="Pos." />
-            <StatusBox status={guess.age} value={guess.player.age.toString()} label="Idade" isAge />
-          </motion.div>
-        ))}
+        {Array.from({ length: maxGuesses }).map((_, i) => {
+          const guess = guesses[i];
+          if (guess) {
+            return (
+              <motion.div 
+                initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                key={i} 
+                className="grid grid-cols-2 md:grid-cols-6 gap-3 bg-white p-3 rounded-2xl shadow-md border-2 border-slate-100"
+              >
+                <div className="col-span-2 md:col-span-1 bg-slate-50 rounded-xl p-3 flex items-center justify-center text-center border-2 border-slate-100 shadow-inner">
+                  <span className="font-black text-slate-700 text-sm md:text-base leading-tight">{guess.player.name}</span>
+                </div>
+                <StatusBox status={guess.nationality} value={guess.player.nationality} label="Nac." />
+                <StatusBox status={guess.league} value={guess.player.league} label="Liga" />
+                <StatusBox status={guess.team} value={guess.player.team} label="Time" />
+                <StatusBox status={guess.position} value={guess.player.position} label="Pos." />
+                <StatusBox status={guess.age} value={guess.player.age.toString()} label="Idade" isAge />
+              </motion.div>
+            );
+          } else {
+            // Empty Slots para dar a estética de Jogo de Tabuleiro/Wordle
+            return (
+              <div key={`empty-${i}`} className="grid grid-cols-2 md:grid-cols-6 gap-3 bg-white/40 p-3 rounded-2xl border-2 border-dashed border-slate-300 opacity-60">
+                <div className="col-span-2 md:col-span-1 bg-slate-100/50 rounded-xl h-12 md:h-full"></div>
+                <div className="bg-slate-100/50 rounded-xl h-14 md:h-16"></div>
+                <div className="bg-slate-100/50 rounded-xl h-14 md:h-16"></div>
+                <div className="bg-slate-100/50 rounded-xl h-14 md:h-16"></div>
+                <div className="bg-slate-100/50 rounded-xl h-14 md:h-16"></div>
+                <div className="bg-slate-100/50 rounded-xl h-14 md:h-16"></div>
+              </div>
+            );
+          }
+        })}
       </div>
     </div>
   );
