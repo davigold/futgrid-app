@@ -1,6 +1,34 @@
 @import "tailwindcss";
 
+:root {
+  --color-primary: #10b981;
+  --color-secondary: #0f172a;
+}
+
 body {
-  background-color: #f8fafc;
+  background-color: #f1f5f9;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+    linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
   color: #0f172a;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+}
+
+.font-athletic {
+  font-family: var(--font-oswald), system-ui, sans-serif;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+}
+
+.card-shadow {
+  box-shadow: 0 8px 20px -6px rgba(0,0,0,0.08), 0 4px 10px -4px rgba(0,0,0,0.04);
 }

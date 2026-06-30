@@ -1,5 +1,10 @@
 import playersData from '../data/mockPlayers.json';
 
+export function normalizeString(str: string): string {
+  if (!str) return '';
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
 export interface PlayerData {
   id: number;
   name: string;
